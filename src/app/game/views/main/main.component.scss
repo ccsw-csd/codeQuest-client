@@ -1,0 +1,35 @@
+.content {
+    display: flex;
+    flex-direction: row;
+    padding-top: 100px;
+    overflow: hidden;
+}
+
+.legend {
+    flex: 1;
+    justify-content: center;
+    display: flex;
+    
+    .legend-text {
+        font-size: 1.2em;
+        min-width: 450px;
+        max-width: 850px;
+        text-align: justify;
+    }
+}
+
+.castle {
+    min-width: 650px;
+    max-width: 850px;
+    flex: 1;
+
+    .castle-row {
+        display:flex;
+        flex-direction:row;
+        justify-content: center;
+    }
+}
+
+.in-castle {  position:relative; top:12px; left: 5px;}
+
+

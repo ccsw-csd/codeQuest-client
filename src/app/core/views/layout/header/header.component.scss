@@ -1,0 +1,38 @@
+@import "./src/assets/scss/master";
+
+::ng-deep {
+    .toolbar-header {
+        .p-toolbar {
+            background-color: $primary-background;
+            border-radius: 0px !important;
+        }
+    }
+
+    .header-button {
+        .p-button {
+            background: transparent;
+            color: $font-color;
+
+            .p-avatar{
+                background: transparent;
+            }
+        }
+
+        .p-button:enabled:focus {
+            background: transparent;
+            color: $font-color;
+        }
+
+        .p-button:enabled:hover {
+            background: transparent;
+            color: $font-color;
+        }
+    }
+}
+
+
+.in-title {
+    margin-left: 10px;
+    -webkit-transform: scale(-1.5, -1.5);
+    transform: scale(-1.5, -1.5);
+}

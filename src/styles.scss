@@ -1,0 +1,19 @@
+@import "./src/assets/scss/master";
+@import url("https://fonts.googleapis.com/css?family=Source+Code+Pro");
+
+
+
+html, body { height: 100%; } 
+body { 
+    background-color: $primary-background;
+    color: $font-color;
+    padding: 0;
+    margin: 0;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+    font-family: "Source Code Pro", sans-serif; 
+}

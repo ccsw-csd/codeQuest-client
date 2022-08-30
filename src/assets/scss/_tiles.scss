@@ -1,0 +1,67 @@
+.tile {
+    margin: 5px 5px 5px 5px;
+    width: 16px;
+    height: 16px;
+    
+    -webkit-transform: scale(2, 2);
+    transform: scale(2, 2);
+}
+
+.none { background: url('/assets/images/colored-transparent.png') 0 0; }
+
+.door { background: url('/assets/images/colored-transparent.png') calc(-4*17px) calc(-13*17px); }
+.cross { background: url('/assets/images/colored-transparent.png') calc(-2*17px) calc(-12*17px); }
+
+.balcony1 { background: url('/assets/images/colored-transparent.png') calc(-1*17px) calc(-11*17px); }
+.balcony2 { background: url('/assets/images/colored-transparent.png') calc(-1*17px) calc(-11*17px); -webkit-transform: scale(2, -2); transform: scale(2, -2);}
+
+.balcony3 { background: url('/assets/images/colored-transparent.png') calc(-1*17px) calc(-11*17px); -webkit-transform: scale(-2, 2); transform: scale(-2, 2);}
+.balcony4 { background: url('/assets/images/colored-transparent.png') calc(-1*17px) calc(-11*17px); -webkit-transform: scale(-2, -2); transform: scale(-2, -2);}
+
+.wall1 { background: url('/assets/images/colored-transparent.png') calc(-10*17px) calc(-17*17px); }
+
+.window1 { background: url('/assets/images/colored-transparent.png') calc(-1*17px) calc(-13*17px); }
+.window2 { background: url('/assets/images/colored-transparent.png') calc(-2*17px) calc(-13*17px); }
+.window3 { background: url('/assets/images/colored-transparent.png') calc(-11*17px) calc(-17*17px); }
+
+.bat { background: url('/assets/images/colored-transparent.png') calc(-26*17px) calc(-8*17px); }
+.fire { background: url('/assets/images/colored-transparent.png') calc(-14*17px) calc(-10*17px); }
+.player { background: url('/assets/images/colored-transparent.png') calc(-27*17px) calc(-1*17px); }
+
+.top1 { background: url('/assets/images/colored-transparent.png') calc(-2*17px) calc(-11*17px); }
+.top2 { background: url('/assets/images/colored-transparent.png') calc(-1*17px) calc(-11*17px); }
+
+
+.tree1 { background: url('/assets/images/colored-transparent.png') calc(-1*17px) calc(-1*17px); -webkit-transform: scale(3, 3); transform: scale(3,3);}
+.tree2 { background: url('/assets/images/colored-transparent.png') calc(-2*17px) calc(-1*17px); -webkit-transform: scale(3, 3); transform: scale(3,3);}
+.tree3 { background: url('/assets/images/colored-transparent.png') calc(-3*17px) calc(-1*17px); -webkit-transform: scale(3, 3); transform: scale(3,3);}
+.tree4 { background: url('/assets/images/colored-transparent.png') calc(-3*17px) calc(-2*17px); -webkit-transform: scale(3, 3); transform: scale(3,3);}
+.tree5 { background: url('/assets/images/colored-transparent.png') calc(-4*17px) calc(-2*17px); -webkit-transform: scale(3, 3); transform: scale(3,3);}
+
+.cloud { background: url('/assets/images/colored-transparent.png') calc(-5*17px) calc(-2*17px); -webkit-transform: scale(3, 3); transform: scale(3,3);}
+.sword { background: url('/assets/images/colored-transparent.png') calc(-35*17px) calc(-8*17px); -webkit-transform: scale(-2, -2); transform: scale(-2,-2);}
+
+
+
+.wall-tl { background: url('/assets/images/colored-transparent.png') calc(-18*17px) calc(-0*17px); }
+.wall-t { background: url('/assets/images/colored-transparent.png') calc(-19*17px) calc(-0*17px); }
+.wall-tr { background: url('/assets/images/colored-transparent.png') calc(-20*17px) calc(-0*17px); }
+
+.wall-l { background: url('/assets/images/colored-transparent.png') calc(-18*17px) calc(-1*17px); }
+.wall-r { background: url('/assets/images/colored-transparent.png') calc(-20*17px) calc(-1*17px); }
+
+.wall-bl { background: url('/assets/images/colored-transparent.png') calc(-18*17px) calc(-2*17px); }
+.wall-b { background: url('/assets/images/colored-transparent.png') calc(-19*17px) calc(-2*17px); }
+.wall-br { background: url('/assets/images/colored-transparent.png') calc(-20*17px) calc(-2*17px); }
+
+.ladder { background: url('/assets/images/colored-transparent.png') calc(-21*17px) calc(-1*17px); }
+.item-sword { background: url('/assets/images/colored-transparent.png') calc(-33*17px) calc(-8*17px); -webkit-transform: scale(-1.5, -1.5); transform: scale(-1.5,-1.5);}
+
+
+.player1 { background: url('/assets/images/colored-transparent.png') calc(-27*17px) calc(-1*17px); }
+.player2 { background: url('/assets/images/colored-transparent.png') calc(-27*17px) calc(-1*17px); }
+
+
+
+
+
