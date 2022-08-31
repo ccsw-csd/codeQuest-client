@@ -1,0 +1,27 @@
+.tab {
+    background: none;
+    color: #9FA8DA;
+    border-color: #9FA8DA;
+    border-top: 1px;
+    border-left: 1px;
+    border-right: 1px;
+    border-style: solid;
+    border-radius: 4px 4px 0px 0px;
+}
+
+.selected {
+    background: #9FA8DA;
+    color: #121212;
+    border: 0 none;
+} 
+
+.info-zone {
+    background: none;
+    border: 1px solid #9FA8DA;
+    border-radius: 0px 4px 4px 4px;
+    padding: 10px; 
+    height: calc(100vh - 385px);
+}
+
+
+

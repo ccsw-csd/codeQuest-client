@@ -4,17 +4,24 @@ import { MainComponent } from './views/main/main.component';
 import { ButtonModule } from 'primeng/button';
 import { LevelComponent } from './views/level/level.component';
 
-import {MonacoEditorModule} from '@dmlukichev/ngx-monaco-editor';
+import { MonacoEditorModule, MONACO_PATH } from '@materia-ui/ngx-monaco-editor';
+
 
 @NgModule({ 
   declarations: [
     MainComponent,
-    LevelComponent
+    LevelComponent,
   ],
   imports: [
     CommonModule,
     ButtonModule,
-    MonacoEditorModule.forRoot() // use forRoot() in main app module only.
-  ]
+    MonacoEditorModule,
+  ],
+  providers: [
+    {
+      provide: MONACO_PATH,
+      useValue: 'https://unpkg.com/monaco-editor@0.31.1/min/vs',
+    },
+  ],
 })
 export class GameModule { }

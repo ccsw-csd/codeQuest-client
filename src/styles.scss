@@ -17,3 +17,28 @@ body {
 * {
     font-family: "Source Code Pro", sans-serif; 
 }
+
+
+.info-tag {
+    background-color: rgb(79, 86, 102);
+    border-radius: 3px;
+    color: rgb(235, 203, 139);
+    font-size: 0.9rem;
+    padding: 0.1em 0.2em;
+}
+
+
+.info-tip {
+    border: 0px;
+    border-left: 6px;
+    border-color: #9FA8DA;
+    border-style: solid;
+    background-color: rgb(89, 96, 112);
+    border-radius: 3px;
+    font-size: 1.1rem;
+    padding: 0.2em 0.4em;
+    margin-top: 0.6em;
+    margin-bottom: 0.4em;
+}
+
+

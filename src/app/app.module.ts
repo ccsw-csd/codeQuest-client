@@ -13,6 +13,8 @@ import { GameModule } from './game/game.module';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 
+import { MonacoEditorModule, MONACO_PATH } from '@materia-ui/ngx-monaco-editor';
+
 registerLocaleData(localeEs,'es');
 
 @NgModule({
@@ -23,11 +25,17 @@ registerLocaleData(localeEs,'es');
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MonacoEditorModule,
     CoreModule,
     LoginModule,
     GameModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MONACO_PATH,
+      useValue: 'https://unpkg.com/monaco-editor@0.31.1/min/vs',
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

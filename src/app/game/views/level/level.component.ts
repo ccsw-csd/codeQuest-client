@@ -1,7 +1,9 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component,  OnInit} from '@angular/core';
+import { filter, take } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 import { LevelMap } from '../../model/LevelMap';
-import { NgxEditorModel } from '@dmlukichev/ngx-monaco-editor';
+import { MonacoEditorConstructionOptions, MonacoEditorLoaderService, MonacoStandaloneCodeEditor} from '@materia-ui/ngx-monaco-editor';
+import { QuestService } from '../../services/quest.service';
 
 
 @Component({
@@ -11,57 +13,68 @@ import { NgxEditorModel } from '@dmlukichev/ngx-monaco-editor';
 })
 export class LevelComponent implements OnInit  {
 
-  @ViewChild("editor") private editor: ElementRef<HTMLElement>;
-
-  public code: string = 
-`/**
- *
- * Comportamiento del jugador
- * 
- */
-class Player {
-    
-    
-  play(warrior) {
-
-    //TODO Implementa logica del jugador
-
-  }
-    
-}`;
-
-  public codeEditorOptions = {
+  level: LevelMap;
+  editor: MonacoStandaloneCodeEditor;
+  tabInfoZoneSelected: number = 0;
+  
+  /**
+   * 
+   */
+  editorOptions: MonacoEditorConstructionOptions = {
     theme: 'vs-dark',
-    language: 'javascript',
-    automaticLayout: true
-  };
+    language: 'typescript',
+    automaticLayout: true,
+    value: "", //this.level.originalCode,
+    roundedSelection: true,
+    autoIndent: 'full',
+    minimap: {
+      enabled: false
+    }
+  };  
 
-  model: NgxEditorModel = {
-    value: this.code,
-    language: 'javascript',
-  };
-
-  level : LevelMap = {
-    name: 'Level 1',
-    quest: {
-      id: 1,
-      name: 'El Castillo de Javascript'
-    },
-    tiles : [
-      ['wall-tl', 'wall-t', 'wall-t', 'wall-t', 'wall-t', 'wall-t', 'wall-t', 'wall-t', 'wall-t', 'wall-t', 'wall-tr'],
-      [ 'wall-l', 'none', 'player', 'none', 'none', 'none', 'none', 'item-sword', 'none', 'ladder',  'wall-r'],
-      ['wall-bl', 'wall-b', 'wall-b', 'wall-b', 'wall-b', 'wall-b', 'wall-b', 'wall-b', 'wall-b', 'wall-b', 'wall-br'],
-    ]
-  }
 
 
   constructor(
-    private route: ActivatedRoute, 
-  ) { }
+    private route: ActivatedRoute,  
+    private monacoLoaderService: MonacoEditorLoaderService,   
+    private questService: QuestService,  
+  ) { 
 
+    
+
+  }
+
+  editorInit(editor: MonacoStandaloneCodeEditor) {
+    this.editor = editor;
+    this.editor.setPosition({column: 6, lineNumber: 12})
+    this.editor.focus();
+  }
+  
+  registerLib(lib: string) {
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(lib);
+  }
+  
   ngOnInit(): void {
-
     var routeId = this.route.snapshot.paramMap.get('id');
+    
+    this.questService.getLevel(routeId).subscribe(data => {
+      this.level = data;
+
+      this.editorOptions.value = data.originalCode;
+
+      this.monacoLoaderService.isMonacoLoaded$
+      .pipe(
+        filter(isLoaded => !!isLoaded),
+        take(1)
+      )
+      .subscribe(() => {
+        this.registerLib(data.lib);
+        
+      });
+
+    });
+
+
   }
 
  
