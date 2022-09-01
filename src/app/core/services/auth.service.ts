@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { ResponseCredentials } from '../models/ResponseCredentials';
@@ -126,7 +126,11 @@ export class AuthService {
   }  
 
   public registerAccess(): Observable<void> {
-    return this.http.get<void>(environment.sso + '/register-access/'+environment.appCode);
+
+    if (environment.production)
+      return this.http.get<void>(environment.sso + '/register-access/'+environment.appCode);
+    else
+      return of();
   }  
   
 }

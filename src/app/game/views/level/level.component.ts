@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LevelMap } from '../../model/LevelMap';
 import { MonacoEditorConstructionOptions, MonacoEditorLoaderService, MonacoStandaloneCodeEditor} from '@materia-ui/ngx-monaco-editor';
 import { QuestService } from '../../services/quest.service';
+import { ConfirmationService } from 'primeng/api';
 
 
 @Component({
@@ -13,10 +14,13 @@ import { QuestService } from '../../services/quest.service';
 })
 export class LevelComponent implements OnInit  {
 
-  level: LevelMap;
+  level: LevelMap = new LevelMap();
   editor: MonacoStandaloneCodeEditor;
   tabInfoZoneSelected: number = 0;
-  
+  loading: boolean = false;
+  levelLoaded: boolean = false;
+  originalCode: string = "";
+
   /**
    * 
    */
@@ -24,7 +28,7 @@ export class LevelComponent implements OnInit  {
     theme: 'vs-dark',
     language: 'typescript',
     automaticLayout: true,
-    value: "", //this.level.originalCode,
+    value: "",
     roundedSelection: true,
     autoIndent: 'full',
     minimap: {
@@ -37,46 +41,73 @@ export class LevelComponent implements OnInit  {
   constructor(
     private route: ActivatedRoute,  
     private monacoLoaderService: MonacoEditorLoaderService,   
-    private questService: QuestService,  
+    private questService: QuestService,
+    private confirmationService: ConfirmationService,
   ) { 
-
     
+    this.loading = true;
+    
+    this.monacoLoaderService.isMonacoLoaded$
+    .pipe(
+      filter(isLoaded => !!isLoaded),
+      take(1)
+      )
+      .subscribe(() => {
+        this.loadLevel();
+    });    
 
   }
+
+  ngOnInit(): void {    
+    
+  }
+
+
+  loadLevel(): void {
+    var routeId = this.route.snapshot.paramMap.get('id');    
+    this.questService.getLevel(routeId).subscribe(data => {
+      
+      this.level = data;
+      this.configureEditor();
+      this.loading = false;
+      this.levelLoaded = true;
+
+    });
+      
+  }
+  
+
+  private configureEditor() : void  {        
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(this.level.lib);  
+    this.editorOptions.value = this.level.originalCode;
+  }  
+  
 
   editorInit(editor: MonacoStandaloneCodeEditor) {
     this.editor = editor;
-    this.editor.setPosition({column: 6, lineNumber: 12})
+    this.resetCode();
+  }
+  
+  clickResetButton() {
+    this.confirmationService.confirm({
+      message: 'Si reseteas el código fuente, perderás el código actual.<br/>&nbsp;<br/> ¿Estás seguro que quieres resetear el código fuente?',
+      acceptLabel: 'Sí',
+      rejectLabel: 'No',
+      header: 'Reseteo del código',
+      accept: () => {
+        this.resetCode();
+      }
+    });
+  }
+  
+  resetCode() {
+
+
+    this.editor.setValue(this.level.originalCode);
+    this.editor.setPosition({column: 5, lineNumber: 12})
     this.editor.focus();
   }
-  
-  registerLib(lib: string) {
-    monaco.languages.typescript.typescriptDefaults.addExtraLib(lib);
-  }
-  
-  ngOnInit(): void {
-    var routeId = this.route.snapshot.paramMap.get('id');
-    
-    this.questService.getLevel(routeId).subscribe(data => {
-      this.level = data;
-
-      this.editorOptions.value = data.originalCode;
-
-      this.monacoLoaderService.isMonacoLoaded$
-      .pipe(
-        filter(isLoaded => !!isLoaded),
-        take(1)
-      )
-      .subscribe(() => {
-        this.registerLib(data.lib);
-        
-      });
-
-    });
 
 
-  }
-
- 
 
 }

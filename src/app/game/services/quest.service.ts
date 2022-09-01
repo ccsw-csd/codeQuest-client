@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LevelMap } from '../model/LevelMap';
 import { QuestStatus } from '../model/QuestStatus';
-import { LEVEL_DATA } from './level-mock';
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class QuestService {
   }
 
   getLevel(id: string): Observable<LevelMap> {
-    return of(LEVEL_DATA);
+    return this.http.get<LevelMap>(environment.server + '/quest/level/'+id);
   }
 
 }

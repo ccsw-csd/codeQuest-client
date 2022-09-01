@@ -2,10 +2,11 @@
     
     <div class="h-full flex-1 flex flex-column">
 
-        <ngx-monaco-editor class="flex-1" [options]="editorOptions" (init)="editorInit($event)" ></ngx-monaco-editor>
+        <ngx-monaco-editor *ngIf="levelLoaded" class="flex-1" [options]="editorOptions" (init)="editorInit($event)" ></ngx-monaco-editor>
+        <div *ngIf="levelLoaded == false" class="flex-1" style="background-color: rgb(30,30,30);"></div>
 
         <div class="flex flex-row mt-4 gap-8">
-            <button pButton class="p-button-secondary p-button-lg flex-1" label="Reset" (click)="editorInit(null)"></button>   
+            <button pButton class="p-button-secondary p-button-lg flex-1" label="Reset" (click)="clickResetButton()"></button>   
             <button pButton class="p-button-primary p-button-lg flex-1" label="Run!" (click)="editorInit(null)"></button>
         </div>
 
@@ -40,7 +41,9 @@
 
 
     </div>
-
 </div>
-
+<div class="progress-spinner" *ngIf="loading">
+    <p-progressSpinner></p-progressSpinner>
+</div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 

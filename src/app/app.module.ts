@@ -33,7 +33,8 @@ registerLocaleData(localeEs,'es');
   providers: [
     {
       provide: MONACO_PATH,
-      useValue: 'https://unpkg.com/monaco-editor@0.31.1/min/vs',
+      //useValue: 'https://unpkg.com/monaco-editor@0.31.1/min/vs',
+      useValue: './assets/monaco-editor/min/vs',
     },
   ],
   bootstrap: [AppComponent]
