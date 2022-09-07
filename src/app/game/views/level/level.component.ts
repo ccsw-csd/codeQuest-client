@@ -72,8 +72,7 @@ export class LevelComponent implements OnInit  {
       this.loading = false;
       this.levelLoaded = true;
 
-    });
-      
+    });      
   }
   
 
@@ -83,12 +82,12 @@ export class LevelComponent implements OnInit  {
   }  
   
 
-  editorInit(editor: MonacoStandaloneCodeEditor) {
+  editorInit(editor: MonacoStandaloneCodeEditor) : void  {
     this.editor = editor;
     this.resetCode();
   }
   
-  clickResetButton() {
+  clickResetButton() : void {
     this.confirmationService.confirm({
       message: 'Si reseteas el código fuente, perderás el código actual.<br/>&nbsp;<br/> ¿Estás seguro que quieres resetear el código fuente?',
       acceptLabel: 'Sí',
@@ -99,14 +98,25 @@ export class LevelComponent implements OnInit  {
       }
     });
   }
-  
-  resetCode() {
 
-
+  resetCode() : void {
     this.editor.setValue(this.level.originalCode);
     this.editor.setPosition({column: 5, lineNumber: 12})
     this.editor.focus();
   }
+
+  clickRunButton() : void {
+
+    let code = this.editor.getValue();
+
+    this.questService.run(this.level.levelId, code).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
+
+  }
+  
 
 
 

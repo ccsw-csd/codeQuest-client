@@ -24,4 +24,8 @@ export class QuestService {
     return this.http.get<LevelMap>(environment.server + '/quest/level/'+id);
   }
 
+  run(id: number, code: string): Observable<LevelMap> {
+    return this.http.post<LevelMap>(environment.server + '/quest/level/'+id+'/run', {'code': code});
+  }  
+
 }
