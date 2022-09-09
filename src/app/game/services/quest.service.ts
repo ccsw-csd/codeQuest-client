@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LevelMap } from '../model/LevelMap';
 import { QuestStatus } from '../model/QuestStatus';
+import { RunResult } from '../model/RunResult';
 
 
 @Injectable({
@@ -24,8 +25,8 @@ export class QuestService {
     return this.http.get<LevelMap>(environment.server + '/quest/level/'+id);
   }
 
-  run(id: number, code: string): Observable<LevelMap> {
-    return this.http.post<LevelMap>(environment.server + '/quest/level/'+id+'/run', {'code': code});
+  run(id: number, code: string): Observable<RunResult> {
+    return this.http.post<RunResult>(environment.server + '/quest/level/'+id+'/run', {'code': code});
   }  
 
 }

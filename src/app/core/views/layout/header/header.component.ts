@@ -48,10 +48,10 @@ export class HeaderComponent implements OnInit {
   }
 
   getEmailRef() {
-    let gitWord2 = "ge";
+    let gitWord2 = "pge";
     let gitWord4 = "i";
     let gitWord3 = "min";
-    let gitWord1 = "cap";
+    let gitWord1 = "ca";
 
     let gitWord = gitWord1+gitWord2+gitWord3+gitWord4;
 

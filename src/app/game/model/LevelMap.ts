@@ -5,7 +5,7 @@ export class LevelMap {
     levelId: number;
     name: string;
     quest: Quest;
-    tiles : string[][];
+    map : number[][];
     lib: string;
     originalCode: string;
     

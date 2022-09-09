@@ -43,23 +43,22 @@
 
 
 
-.wall-tl { background: url('/assets/images/colored-transparent.png') calc(-18*17px) calc(-0*17px); }
-.wall-t { background: url('/assets/images/colored-transparent.png') calc(-19*17px) calc(-0*17px); }
-.wall-tr { background: url('/assets/images/colored-transparent.png') calc(-20*17px) calc(-0*17px); }
+/* wall top left       */ .tile-7 { background: url('/assets/images/colored-transparent.png') calc(-18*17px) calc(-0*17px); }
+/* wall top center     */ .tile-8 { background: url('/assets/images/colored-transparent.png') calc(-19*17px) calc(-0*17px); }
+/* wall top right      */ .tile-9 { background: url('/assets/images/colored-transparent.png') calc(-20*17px) calc(-0*17px); }
 
-.wall-l { background: url('/assets/images/colored-transparent.png') calc(-18*17px) calc(-1*17px); }
-.wall-r { background: url('/assets/images/colored-transparent.png') calc(-20*17px) calc(-1*17px); }
+/* wall center left    */ .tile-4 { background: url('/assets/images/colored-transparent.png') calc(-18*17px) calc(-1*17px); }
+/* wall center right   */ .tile-6 { background: url('/assets/images/colored-transparent.png') calc(-20*17px) calc(-1*17px); }
 
-.wall-bl { background: url('/assets/images/colored-transparent.png') calc(-18*17px) calc(-2*17px); }
-.wall-b { background: url('/assets/images/colored-transparent.png') calc(-19*17px) calc(-2*17px); }
-.wall-br { background: url('/assets/images/colored-transparent.png') calc(-20*17px) calc(-2*17px); }
+/* wall bottom left    */ .tile-1 { background: url('/assets/images/colored-transparent.png') calc(-18*17px) calc(-2*17px); }
+/* wall bottom center  */ .tile-2 { background: url('/assets/images/colored-transparent.png') calc(-19*17px) calc(-2*17px); }
+/* wall bottom right   */ .tile-3 { background: url('/assets/images/colored-transparent.png') calc(-20*17px) calc(-2*17px); }
 
-.ladder { background: url('/assets/images/colored-transparent.png') calc(-21*17px) calc(-1*17px); }
-.item-sword { background: url('/assets/images/colored-transparent.png') calc(-33*17px) calc(-8*17px); -webkit-transform: scale(-1.5, -1.5); transform: scale(-1.5,-1.5);}
+/* stairs              */ .tile-99 { background: url('/assets/images/colored-transparent.png') calc(-21*17px) calc(-1*17px); }
+/* sword               */ .tile-98 { background: url('/assets/images/colored-transparent.png') calc(-33*17px) calc(-8*17px); -webkit-transform: scale(-1.5, -1.5); transform: scale(-1.5,-1.5);}
 
-
-.player1 { background: url('/assets/images/colored-transparent.png') calc(-27*17px) calc(-1*17px); }
-.player2 { background: url('/assets/images/colored-transparent.png') calc(-27*17px) calc(-1*17px); }
+/* player1             */ .tile-11 { background: url('/assets/images/colored-transparent.png') calc(-27*17px) calc(-1*17px); }
+/* player2             */ .tile-12 { background: url('/assets/images/colored-transparent.png') calc(-27*17px) calc(-1*17px); }
 
 
 

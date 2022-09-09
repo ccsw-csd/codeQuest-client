@@ -19,8 +19,8 @@
 
         <div class="map flex flex-column align-items-center pt-6 pb-6">
 
-            <div *ngFor="let row of level.tiles; let c = index" class="flex flex-row">
-                <div *ngFor="let tile of level.tiles[c]; let r = index" class="tile {{level.tiles[c][r]}}">
+            <div *ngFor="let row of showMap; let c = index" class="flex flex-row">
+                <div *ngFor="let tile of showMap[c]; let r = index" class="tile tile-{{showMap[c][r]}}">
                 </div>
             </div>
 
@@ -28,14 +28,29 @@
 
 
         <div class="flex flex-row gap-2">
-            <button pButton class="tab" [class.selected]= "tabInfoZoneSelected == 0" label="Chapter" (click)="tabInfoZoneSelected = 0"></button>   
-            <button pButton class="tab" [class.selected]= "tabInfoZoneSelected == 1" label="History" (click)="tabInfoZoneSelected = 1"></button>
+            <button pButton class="tab" [class.selected]= "tabInfoZoneSelected == 0" label="Chapter" (click)="changeInfoZone(0)"></button>   
+            <button pButton class="tab" [class.selected]= "tabInfoZoneSelected == 1" label="History" (click)="changeInfoZone(1)"></button>
         </div>
-        <div class="info-zone overflow-x-hidden overflow-y-auto p-4">
+        <div class="info-zone overflow-x-hidden overflow-y-auto p-4 flex flex-column" id='historyPanel' #historyPanel>
             <div *ngIf="tabInfoZoneSelected == 0" [innerHTML]="level.chapterInfo">
             </div>
-            <div *ngIf="tabInfoZoneSelected == 1">
-                Historia
+            <div *ngIf="tabInfoZoneSelected == 1" class="flex flex-column">
+                <div *ngIf="runningCode" class="align-self-center">
+                    <p-progressSpinner></p-progressSpinner>
+                </div>
+                <div *ngIf="playedEvents != null && runningCode == false" class="m-0 p-0">
+                    <div *ngFor="let event of playedEvents; let eventIndex = index;"  (mouseenter)="focusEvent(event)" (mouseleave)="blurEvent()" class="history-event">
+                        <!--
+                            <h2 class="mt-0">Turno {{turnIndex+1}}</h2>
+                        -->
+                        <h2 *ngIf="eventIndex == 0 || playedEvents[eventIndex-1].turn != event.turn" class="pt-4 mt-0 mb-2">Turno {{event.turn+1}}</h2>
+                        <div class="history-event-tip">
+                            <div class="history-event-message">
+                                {{event.message}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

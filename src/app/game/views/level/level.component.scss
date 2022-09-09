@@ -24,4 +24,31 @@
 }
 
 
+.history-event {
+
+    .history-event-tip {
+        padding-bottom: 0.6em;
+
+        .history-event-message {
+            border: 0px;
+            border-left: 6px;
+            border-color: #9FA8DA;
+            border-style: solid;
+            background-color: rgb(89, 96, 112);
+            border-radius: 3px;
+            padding: 0.6em 0.4em;
+            cursor: pointer;
+        }
+    }
+
+    &:hover {
+
+        .history-event-tip {
+            .history-event-message {
+                background-color: rgb(105, 110, 130);
+                border-color: #7F7FFF;
+            }
+        }
+    }
+}
 

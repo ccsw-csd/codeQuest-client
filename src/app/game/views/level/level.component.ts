@@ -1,10 +1,11 @@
-import { Component,  OnInit} from '@angular/core';
+import { Component,  ElementRef,  OnInit, ViewChild} from '@angular/core';
 import { filter, take } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { LevelMap } from '../../model/LevelMap';
 import { MonacoEditorConstructionOptions, MonacoEditorLoaderService, MonacoStandaloneCodeEditor} from '@materia-ui/ngx-monaco-editor';
 import { QuestService } from '../../services/quest.service';
 import { ConfirmationService } from 'primeng/api';
+import { EventPlayResult, RunResult, TurnRunResult } from '../../model/RunResult';
 
 
 @Component({
@@ -14,12 +15,24 @@ import { ConfirmationService } from 'primeng/api';
 })
 export class LevelComponent implements OnInit  {
 
+  @ViewChild('historyPanel') private historyPanelContainer: ElementRef;
+
+  showMap : number[][] = [];
+
   level: LevelMap = new LevelMap();
   editor: MonacoStandaloneCodeEditor;
-  tabInfoZoneSelected: number = 0;
+  tabInfoZoneSelected: number = 1;
   loading: boolean = false;
   levelLoaded: boolean = false;
   originalCode: string = "";
+
+  
+  runningCode: boolean = false;
+  history: RunResult = null;
+  
+  historyEvents: EventPlayResult[] = [];
+  playedEvents: EventPlayResult[] = [];
+  playVelocity: number = 750;
 
   /**
    * 
@@ -58,8 +71,7 @@ export class LevelComponent implements OnInit  {
 
   }
 
-  ngOnInit(): void {    
-    
+  ngOnInit(): void {        
   }
 
 
@@ -68,10 +80,15 @@ export class LevelComponent implements OnInit  {
     this.questService.getLevel(routeId).subscribe(data => {
       
       this.level = data;
+      this.showMap = data.map;
       this.configureEditor();
       this.loading = false;
       this.levelLoaded = true;
 
+
+      setTimeout(() => {        
+        this.clickRunButton();
+      }, 1);
     });      
   }
   
@@ -99,6 +116,10 @@ export class LevelComponent implements OnInit  {
     });
   }
 
+  changeInfoZone(tabIndex: number) : void {
+    this.tabInfoZoneSelected = tabIndex;
+  }
+
   resetCode() : void {
     this.editor.setValue(this.level.originalCode);
     this.editor.setPosition({column: 5, lineNumber: 12})
@@ -109,11 +130,100 @@ export class LevelComponent implements OnInit  {
 
     let code = this.editor.getValue();
 
+    this.tabInfoZoneSelected = 1;
+    this.runningCode = true;
+    
+    this.history = {"status":2,"turns":[{"map":[[7,8,8,8,8,8,8,8,8,8,9],[4,0,0,11,0,0,0,98,0,99,6],[1,2,2,2,2,2,2,2,2,2,3]],"events":[{"message":"El jugador avanza su posición.","type":2,"data":null}],"health":100},{"map":[[7,8,8,8,8,8,8,8,8,8,9],[4,0,0,0,11,0,0,98,0,99,6],[1,2,2,2,2,2,2,2,2,2,3]],"events":[{"message":"El jugador avanza su posición.","type":2,"data":null}],"health":100},{"map":[[7,8,8,8,8,8,8,8,8,8,9],[4,0,0,0,0,11,0,98,0,99,6],[1,2,2,2,2,2,2,2,2,2,3]],"events":[{"message":"El jugador avanza su posición.","type":2,"data":null}],"health":100},{"map":[[7,8,8,8,8,8,8,8,8,8,9],[4,0,0,0,0,0,11,98,0,99,6],[1,2,2,2,2,2,2,2,2,2,3]],"events":[{"message":"El jugador avanza su posición.","type":2,"data":null}],"health":100},{"map":[[7,8,8,8,8,8,8,8,8,8,9],[4,0,0,0,0,0,0,11,0,99,6],[1,2,2,2,2,2,2,2,2,2,3]],"events":[{"message":"El jugador avanza su posición.","type":2,"data":null},{"message":"El jugador coge la espada.","type":4,"data":null}],"health":100},{"map":[[7,8,8,8,8,8,8,8,8,8,9],[4,0,0,0,0,0,0,0,11,99,6],[1,2,2,2,2,2,2,2,2,2,3]],"events":[{"message":"El jugador avanza su posición.","type":2,"data":null}],"health":100},{"map":[[7,8,8,8,8,8,8,8,8,8,9],[4,0,0,0,0,0,0,0,0,11,6],[1,2,2,2,2,2,2,2,2,2,3]],"events":[{"message":"El jugador avanza su posición.","type":2,"data":null},{"message":"El jugador llega a la escalera y sube al siguiente piso.","type":6,"data":null}],"health":100}]};
+    this.runningCode = false;
+
+
+    this.extractHistoryEvents(this.history);
+
+    this.playHistory(this.historyEvents.length);
+
+    
+
+    /*
     this.questService.run(this.level.levelId, code).subscribe(
       data => {
         console.log(data);
+        this.runningCode = false;
       }
     );
+    */
+    
+
+  }
+
+  focusEvent(event : EventPlayResult) : void {
+
+    if (event == null) return;
+
+    this.showMap = event.map;
+  }
+
+  blurEvent(): void {
+
+    if (this.playedEvents == null) return;
+
+    this.focusEvent(this.playedEvents[this.playedEvents.length-1]);
+  }
+
+
+  playHistory(frame : number) : void {
+
+    if (this.historyEvents == null || frame > this.historyEvents.length) return;
+    
+    this.composeHistory(frame);
+
+    setTimeout(() => {
+      this.historyPanelContainer.nativeElement.scrollTop = this.historyPanelContainer.nativeElement.scrollHeight;
+    }, 1);
+
+    setTimeout(() => {
+      this.playHistory(frame+1);    
+    }, this.playVelocity);
+
+  }
+
+
+  extractHistoryEvents(history: RunResult) : void {
+
+    this.historyEvents = [];
+    if (history == null) return; 
+
+    let turnIndex = 0;
+    history.turns.forEach((turn) => {
+
+
+      turn.events.forEach((event) => {
+
+        let eventPlay : EventPlayResult = new EventPlayResult();
+
+        eventPlay.turn = turnIndex;
+        eventPlay.health = turn.health;
+        eventPlay.map = turn.map;
+
+        eventPlay.data = event.data;
+        eventPlay.message = event.message;
+        eventPlay.type = event.type;
+
+        this.historyEvents.push(eventPlay);
+      });
+
+      turnIndex++;
+    })
+
+  }
+
+
+  composeHistory(frame : number) : void {
+
+    this.playedEvents = [];
+    if (this.historyEvents == null) return; 
+
+    this.playedEvents = this.historyEvents.slice(0, frame);
+    if (this.playedEvents.length > 0) this.showMap = this.playedEvents[this.playedEvents.length-1].map;
 
   }
   
