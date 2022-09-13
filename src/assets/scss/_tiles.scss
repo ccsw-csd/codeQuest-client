@@ -42,6 +42,8 @@
 .sword { background: url('/assets/images/colored-transparent.png') calc(-35*17px) calc(-8*17px); -webkit-transform: scale(-2, -2); transform: scale(-2,-2);}
 
 
+/* vacio               */ .tile-0 { background: url('/assets/images/colored-transparent.png') 0 0; }
+/* puerta lateral null */ .tile-98 { background: url('/assets/images/colored-transparent.png') 0 0; }
 
 /* wall top left       */ .tile-7 { background: url('/assets/images/colored-transparent.png') calc(-18*17px) calc(-0*17px); }
 /* wall top center     */ .tile-8 { background: url('/assets/images/colored-transparent.png') calc(-19*17px) calc(-0*17px); }
@@ -55,10 +57,13 @@
 /* wall bottom right   */ .tile-3 { background: url('/assets/images/colored-transparent.png') calc(-20*17px) calc(-2*17px); }
 
 /* stairs              */ .tile-99 { background: url('/assets/images/colored-transparent.png') calc(-21*17px) calc(-1*17px); }
-/* sword               */ .tile-98 { background: url('/assets/images/colored-transparent.png') calc(-33*17px) calc(-8*17px); -webkit-transform: scale(-1.5, -1.5); transform: scale(-1.5,-1.5);}
+/* sword               */ .tile-81 { background: url('/assets/images/colored-transparent.png') calc(-33*17px) calc(-8*17px); -webkit-transform: scale(-1.5, -1.5); transform: scale(-1.5,-1.5);}
 
 /* player1             */ .tile-11 { background: url('/assets/images/colored-transparent.png') calc(-27*17px) calc(-1*17px); }
 /* player2             */ .tile-12 { background: url('/assets/images/colored-transparent.png') calc(-27*17px) calc(-1*17px); }
+
+
+/* enemy - bat         */ .tile-21 { background: url('/assets/images/colored-transparent.png') calc(-26*17px) calc(-8*17px); }
 
 
 

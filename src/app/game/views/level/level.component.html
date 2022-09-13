@@ -30,6 +30,8 @@
         <div class="flex flex-row gap-2">
             <button pButton class="tab" [class.selected]= "tabInfoZoneSelected == 0" label="Chapter" (click)="changeInfoZone(0)"></button>   
             <button pButton class="tab" [class.selected]= "tabInfoZoneSelected == 1" label="History" (click)="changeInfoZone(1)"></button>
+            <div class="flex-1"></div>
+            <div class="w-4rem pt-2 {{playedHeartAnimation}}"><i class="pi pi-heart-fill text-red-500"></i> {{playedHeart}}</div>
         </div>
         <div class="info-zone overflow-x-hidden overflow-y-auto p-4 flex flex-column" id='historyPanel' #historyPanel>
             <div *ngIf="tabInfoZoneSelected == 0" [innerHTML]="level.chapterInfo">
@@ -38,11 +40,18 @@
                 <div *ngIf="runningCode" class="align-self-center">
                     <p-progressSpinner></p-progressSpinner>
                 </div>
-                <div *ngIf="playedEvents != null && runningCode == false" class="m-0 p-0">
+                <div *ngIf="history == null">
+                    <p>Implementa la lógica del jugador que sea necesaria para conseguir completar el nivel actual.</p>
+                    <p>Una vez implementado, ejecuta el código mediante el botón "Run!".</p>
+                </div>
+                <div *ngIf="history != null && history.status == -1">
+                    <h2>Error en la ejecución.</h2>
+                    <p>No se permite realizar más de una habilidad de acción en el mismo turno.</p>
+                    <p>Revisa el algoritmo y utiliza solo una acción por turno. Utiliza condicionales haciendo uso de habilidades de sentidos.</p>
+
+                </div>
+                <div *ngIf="playedEvents != null && runningCode == false" class="m-0 p-0">                    
                     <div *ngFor="let event of playedEvents; let eventIndex = index;"  (mouseenter)="focusEvent(event)" (mouseleave)="blurEvent()" class="history-event">
-                        <!--
-                            <h2 class="mt-0">Turno {{turnIndex+1}}</h2>
-                        -->
                         <h2 *ngIf="eventIndex == 0 || playedEvents[eventIndex-1].turn != event.turn" class="pt-4 mt-0 mb-2">Turno {{event.turn+1}}</h2>
                         <div class="history-event-tip">
                             <div class="history-event-message">

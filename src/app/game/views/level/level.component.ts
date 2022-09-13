@@ -21,7 +21,7 @@ export class LevelComponent implements OnInit  {
 
   level: LevelMap = new LevelMap();
   editor: MonacoStandaloneCodeEditor;
-  tabInfoZoneSelected: number = 1;
+  tabInfoZoneSelected: number = 0;
   loading: boolean = false;
   levelLoaded: boolean = false;
   originalCode: string = "";
@@ -33,6 +33,9 @@ export class LevelComponent implements OnInit  {
   historyEvents: EventPlayResult[] = [];
   playedEvents: EventPlayResult[] = [];
   playVelocity: number = 750;
+  playedHeart: number = 100;
+  lastHeartTimeout : any = null;
+  playedHeartAnimation: string = "";
 
   /**
    * 
@@ -84,11 +87,6 @@ export class LevelComponent implements OnInit  {
       this.configureEditor();
       this.loading = false;
       this.levelLoaded = true;
-
-
-      setTimeout(() => {        
-        this.clickRunButton();
-      }, 1);
     });      
   }
   
@@ -128,37 +126,55 @@ export class LevelComponent implements OnInit  {
 
   clickRunButton() : void {
 
+    if (monaco.editor.getModelMarkers({}).length > 0) {
+
+      this.confirmationService.confirm({
+        message: 'El código fuente tiene errores y no puede ejecutarse.<br/>&nbsp;<br/>Revisa el código antes de ejecutarlo',
+        header: 'Error de compilación',
+        acceptLabel: 'Aceptar',
+        rejectVisible: false
+      });
+
+      return;
+    }
+
     let code = this.editor.getValue();
 
     this.tabInfoZoneSelected = 1;
     this.runningCode = true;
-    
-    this.history = {"status":2,"turns":[{"map":[[7,8,8,8,8,8,8,8,8,8,9],[4,0,0,11,0,0,0,98,0,99,6],[1,2,2,2,2,2,2,2,2,2,3]],"events":[{"message":"El jugador avanza su posición.","type":2,"data":null}],"health":100},{"map":[[7,8,8,8,8,8,8,8,8,8,9],[4,0,0,0,11,0,0,98,0,99,6],[1,2,2,2,2,2,2,2,2,2,3]],"events":[{"message":"El jugador avanza su posición.","type":2,"data":null}],"health":100},{"map":[[7,8,8,8,8,8,8,8,8,8,9],[4,0,0,0,0,11,0,98,0,99,6],[1,2,2,2,2,2,2,2,2,2,3]],"events":[{"message":"El jugador avanza su posición.","type":2,"data":null}],"health":100},{"map":[[7,8,8,8,8,8,8,8,8,8,9],[4,0,0,0,0,0,11,98,0,99,6],[1,2,2,2,2,2,2,2,2,2,3]],"events":[{"message":"El jugador avanza su posición.","type":2,"data":null}],"health":100},{"map":[[7,8,8,8,8,8,8,8,8,8,9],[4,0,0,0,0,0,0,11,0,99,6],[1,2,2,2,2,2,2,2,2,2,3]],"events":[{"message":"El jugador avanza su posición.","type":2,"data":null},{"message":"El jugador coge la espada.","type":4,"data":null}],"health":100},{"map":[[7,8,8,8,8,8,8,8,8,8,9],[4,0,0,0,0,0,0,0,11,99,6],[1,2,2,2,2,2,2,2,2,2,3]],"events":[{"message":"El jugador avanza su posición.","type":2,"data":null}],"health":100},{"map":[[7,8,8,8,8,8,8,8,8,8,9],[4,0,0,0,0,0,0,0,0,11,6],[1,2,2,2,2,2,2,2,2,2,3]],"events":[{"message":"El jugador avanza su posición.","type":2,"data":null},{"message":"El jugador llega a la escalera y sube al siguiente piso.","type":6,"data":null}],"health":100}]};
-    this.runningCode = false;
+  
 
-
-    this.extractHistoryEvents(this.history);
-
-    this.playHistory(this.historyEvents.length);
-
-    
-
-    /*
     this.questService.run(this.level.levelId, code).subscribe(
       data => {
-        console.log(data);
+        
+        this.history = data;
         this.runningCode = false;
+    
+        this.extractHistoryEvents(this.history);
+        this.playHistory(0);
       }
     );
-    */
-    
 
   }
+
+  
 
   focusEvent(event : EventPlayResult) : void {
 
     if (event == null) return;
 
+    if (this.playedHeart != event.health) {
+
+      this.playedHeartAnimation="scalein animation-duration-400 animation-iteration-2";
+      if (this.lastHeartTimeout != null) clearTimeout(this.lastHeartTimeout);
+      this.lastHeartTimeout = setTimeout(() => {
+        this.playedHeartAnimation="";
+        this.lastHeartTimeout = null;
+      }, 800);
+    }
+
+
+    this.playedHeart = event.health;
     this.showMap = event.map;
   }
 
@@ -223,7 +239,13 @@ export class LevelComponent implements OnInit  {
     if (this.historyEvents == null) return; 
 
     this.playedEvents = this.historyEvents.slice(0, frame);
-    if (this.playedEvents.length > 0) this.showMap = this.playedEvents[this.playedEvents.length-1].map;
+    if (this.playedEvents.length > 0) {
+
+      this.focusEvent(this.playedEvents[this.playedEvents.length-1]);
+
+      //this.showMap = this.playedEvents[this.playedEvents.length-1].map;
+      //this.playedHeart = this.playedEvents[this.playedEvents.length-1].health;
+    }
 
   }
   
