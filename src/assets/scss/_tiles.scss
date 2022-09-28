@@ -58,13 +58,27 @@
 
 /* stairs              */ .tile-99 { background: url('/assets/images/colored-transparent.png') calc(-21*17px) calc(-1*17px); }
 /* sword               */ .tile-81 { background: url('/assets/images/colored-transparent.png') calc(-33*17px) calc(-8*17px); -webkit-transform: scale(-1.5, -1.5); transform: scale(-1.5,-1.5);}
+/* bow                 */ .tile-82 { background: url('/assets/images/colored-transparent.png') calc(-37*17px) calc(-6*17px); -webkit-transform: scale(-1.5, -1.5); transform: scale(-1.5,-1.5);}
 
 /* player1             */ .tile-11 { background: url('/assets/images/colored-transparent.png') calc(-27*17px) calc(-1*17px); }
 /* player2             */ .tile-12 { background: url('/assets/images/colored-transparent.png') calc(-27*17px) calc(-1*17px); }
 
 
 /* enemy - bat         */ .tile-21 { background: url('/assets/images/colored-transparent.png') calc(-26*17px) calc(-8*17px); }
+/* enemy - sword       */ .tile-22 { background: url('/assets/images/colored-transparent.png') calc(-28*17px) calc(-2*17px); }
+/* enemy - bow         */ .tile-23 { background: url('/assets/images/colored-transparent.png') calc(-26*17px) calc(-0*17px); }
+/* enemy - warrior     */ .tile-24 { background: url('/assets/images/colored-transparent.png') calc(-28*17px) calc(-0*17px); }
+/* enemy - wizzard 1   */ .tile-25 { background: url('/assets/images/colored-transparent.png') calc(-24*17px) calc(-0*17px); }
+/* enemy - wizzard 2   */ .tile-26 { background: url('/assets/images/colored-transparent.png') calc(-24*17px) calc(-1*17px); }
 
+
+/* switch-on           */ .tile-71 { background: url('/assets/images/colored-transparent.png') calc(-3*17px) calc(-10*17px); }
+/* switch-off          */ .tile-72 { background: url('/assets/images/colored-transparent.png') calc(-4*17px) calc(-10*17px); }
+
+
+
+/* trap-on             */ .tile-31 { background: url('/assets/images/colored-transparent.png') calc(-0*17px) calc(-6*17px); }
+/* trap-off            */ .tile-32 { background: url('/assets/images/colored-transparent.png') calc(-1*17px) calc(-6*17px); }
 
 
 

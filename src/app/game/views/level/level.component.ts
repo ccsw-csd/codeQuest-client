@@ -120,7 +120,14 @@ export class LevelComponent implements OnInit  {
 
   resetCode() : void {
     this.editor.setValue(this.level.originalCode);
-    this.editor.setPosition({column: 5, lineNumber: 12})
+    this.editor.setPosition({column: 5, lineNumber: 12});
+    this.playedHeart = 100;
+    this.showMap = this.level.map;
+    this.history = null;
+    this.historyEvents = [];
+    this.playedEvents = [];
+    this.tabInfoZoneSelected = 0;
+
     this.editor.focus();
   }
 
